@@ -1,0 +1,270 @@
+<h1>Locative Server</h1>
+
+<h2>Resources</h2>
+
+<ul>
+<li> http://github.com/anselm/locative
+<li> http://twitter.com/locative
+<li> Mailing List [ TBD ]
+<li>  Wiki [ TBD ]
+<li>   Bug Tracking [ TBD]
+</ul>
+
+<h2>Executive Overview</h2>
+
+This is an open source software program that lets people publish and share information about places. It consists of two separate pieces:
+
+<ol>
+<li> A web based interface that you can connect through with an ordinary web browser.
+<li> A mobile interface.
+</ol>
+
+<p>
+The hope is to provide an open source locative media framework for building a variety of locative media applications. This effort requires an open source license, a developer community, outreach and development. It requires an understanding of peoples interests and burgeoning mobile technology capabilities.  It requires a collection of software pieces, each trying to be reasonably orthogonal and independent.
+
+<h2>Installation</h2>
+
+<ul>
+<li>Install <a href="http://rubyonrails.com">Rails</a></li>
+<li>Use git to fetch the depot from <a href="http://github.com/anselm/locative">github/anselm/locative</a></li>
+<li>Install gems specified in README</li>
+<li>Install PostgreSQL</li>
+<li>Setup database and user 'locative'</li>
+<li>Run rake db:migrate</li>
+<li>Run rake db:seed</li>
+<li>Run app by typing script/server start</li>
+</ul>
+
+<h2>Use Cases</h2>
+
+There is a class of augmented reality applications emerging that have a need for core management of locative data. These applications tend to be ambient, in that they are used everywhere, not at home or the office.  They tend to be interactive, many participant environments with a focus on real-time data. The lifestyle of people using these applications tends to be more nomadic, and there is a quality of being able to 'see through walls' that participants take for granted. A conversation takes place in the locative framework with passers-by being able to listen in. There are opportunities to connect to and understand a local landscape in an intimate and familiar way - as if one had grown up there.
+<p>
+The kinds of applications we see this engine being used for include:
+<p>
+
+<ol>
+    <li>    Allowing a group of people to go out into the field and record situational pictures, audio, movies and text of their environment in an offline mode and then report it back to a central server and share it with other people when they were back in an online environment.
+    <li>    Allowing a group of people to see each other in real time if they are in an online environment.
+    <li>    A foundation for simple locative games and situated story experiences such as virtual geocaching, locative pac-man, locative Tron or locative media stories or cinema.
+    <li>    A crisis reporting tool.
+    <li>    An augmented reality view of the world.
+    <li>    Basic Locative Media Posting
+    <li>    Geolocative Twitter
+    <li>    Locative Games
+    <li>    Locative Transaction Brokering
+    <li>    Locative Advertising
+    <li>    Locative Art and Psychogeography
+ </ol>
+
+There are a number of 'commonly assumed' or expected core concepts which we will belabor for clarity:
+
+<ol>
+    <li>    The goal is to run on hand held devices that can be used while walking about. These devices have a GPS, a screen, a camera and can record video.
+    <li>    There is often a need to track relationships between posts - posts may be collected as a 'map', an 'event', a 'place' or with other kinds of simple named relationships.
+    <li>    There is often a need to 'curate' participant activity. Participants may be asked to contribute to a specific 'map' and there may be permission restrictions on user powers.
+</ol>
+
+<h2>Development Strategies</h2>
+
+This is an open source effort with the hope that it will be community driven.  Practices to try to foster this include:
+
+<ol>
+    <li>    Dual licensed GPL / BSD
+    <li>    Design mocks usually in HTML or photoshop.
+    <li>    Short term iteration cycles - one week or less.
+    <li>    Praxis; half code and half talk.
+    <li>    Shared code repository with analytics using github.
+    <li>    A twitter and facebook for outreach.
+    <li>    Bug Tracking
+    <li>    A collaborative wiki or shared space on the web for sharing documents; github may do .
+    <li>    Very wide net; getting as much feedback as possible from an extended community of thousands of peers .
+    <li>    Creative commons licenses for content; most open one I can find.
+    <li>    XP process of working with other people for extended jam sessions around a table and doing code sprints.
+    <li>    Self documenting code.
+    <li>    Unit tests and regression tests on code.
+    <li>    MVC separation of code into model, view, controller for separation of roles
+    <li>    Granular Composition of code fragments usually anchored around a good data model; no monolithic code approaches.
+    <li>    You lose 1/2 of your audience for each additional button click; click depth must be kept near zero.
+    <li>   Never write anything; the world is filled with source code that can be repurposed.
+    <li>    Work collaboratively in the open with as much feedback from other people as much as possible.
+    <li>    Constant outreach to community, participation and presentations.
+</ol>
+
+<h2>Database Overview</h2>
+
+The data model allows the management of spatial information as well as the parties that post this information.  The kinds of filters that you can apply to information include filtering by keywords, filtering by social networks, filtering by geography and time.
+<p>
+Here is a design sketch for the database : http://www.gliffy.com/publish/1772046/
+<p>
+The core database concepts are centered around the idea of a note:
+<ol>
+    <li>    Note. Note is the atomic core of all user created objects.  Posts are a kind of 'notes'. Other kinds of 'notes' may be 'maps' and 'events' and 'layers' or the like. We relate these so that graph traversal operations are easier in the RDBMS.
+    <li>    Post. A post is a bundle that allow a single title, a single description, a single image or sound file or movie file. As well later it may be possible to post a line segment, a polygon or a geometric shape. Later it may be possible to post a behavior as well, and posts may very well be treated as a kind of element in a scene-graph with a concept of children posts forming a directed acyclic graph. In general related posts can be grouped together by a variety of 'soft' relationships such as time, shared-tags, shared-authorship and related to a given event.  Later it may be possible to attach a 'behavior' to a report node such that the object can move around by itself over time or handle different kinds of messages such as collision events - this would make the engine more game-like.
+    <li>   Map. A grouping of reports by user.
+</ol>
+
+<h2>Ancillary database concepts are:</h2>
+<ol>
+    <li>    User. People that have actually signed up for a membership and may have special roles such as grooming or curating the database in addition to being able to make new posts directly to the database. We do not consider a User to be a Party even though they may both speak about the same person since not all parties that make posts have ever signed into the system itself. We consider that there are a variety of formal kinds of users including administrators, curators and match-makers as well as unprivileged users.
+    <li>    Reporter. A reporter is a kind of user. Content that is aggregated would not have a local user as an owner. A party has concepts such as a location and posts. This concept is very similar to the Ushahidi concept of a 'reporter'. We've chosen to try to use neutral terms rather than application specific use specific terms.
+    <li>    Administrator.  An administrator is a kind of user with special powers over a given collection of notes and posts.
+    <li>    Report. A report is a kind of post - it is a convenience concept to map better to third party tools such as SwiftApp.
+    <li>    Event. A grouping of reports as an event.
+    <li>    Place. A grouping of reports or posts as a place.
+    <li>    Filter. A search filter over a group of reports.
+    <li>    Group. Another grouping convenience object.
+    <li>   Tag. Posts can be categorized and thus related together by tags which are user defined keywords. There are a number of kinds of tags used to group posts.  1)Tags that are assigned by semantic keyword extraction are marked as such 2) Tags that are part of a formal categorization and labeling system are marked as such. 3) Tags that are informal are also marked as such - any relationship between a given party and a given post may be a scored tag. All together tags help related related posts and weight the strength of their relationships.
+    <li>    History. We may need to track the history of user activity such as searches and browse events as well as creation events so that we can later return better results to users.
+</ol>
+
+<h2>Database Note Objects in more detail</h2>
+
+Notes are the atomic core of all objects that users can publish about - any object the user can make will in general have these properties:
+<ol>
+    <li>    ID. Each note has a unique database key.
+    <li>    Kind. We treat notes as either posts or maps currently.
+    <li>    UUID. Each note has a globally unique ID assigned by the system on creation.
+    <li>    Provenance. Each note has a source - usually this is internal but it is possible during aggregation for posts to arrive from elsewhere.
+    <li>    Sponsor. Who made the note?
+    <li>    Title. Brief form summary of the subject.
+    <li>    Description. Detailed prose on the subject.
+    <li>    Category and Tags. Notes may be tagged such as http://delicious.com offers.
+    <li>    Location. Notes have a location as a prose description as well as a longitude and latitude.
+    <li>    Latitude and Longitude. Potes have a position
+    <li>    Radius. Notes have a spherical radius.
+    <li>    Date Created. When was the note made?
+    <li>    Date Updated. When was the last time the note was edited?
+    <li>    Associations. Notes can be grouped into a variety of grouping mechanisms including a user defined map.
+    <li>    File. Notes may have an image or audio file.
+    <li>    Geometry. Notes may include a point, line, polygon, volume.
+    <li>    Visibility. Notes may be public, protected or private.
+    <li>    Delete. Notes may be deletable.
+</ol>
+
+<h2>Database Post Objects in more detail</h2>
+
+A "post" is a kind of note and it in turn is the atomic core of what a user is able to publish. It is a single observation such as a single photograph, a single comment, a single audio stream and it has a time, location and authorship.
+
+<h2>Database Map Objects in more detail</h2>
+
+Maps are a variation of Note that is used to group a series of related Posts. Groupings are important. Notes may be collected as an event or a user defined map. Some groupings may be protected such that third parties cannot modify them. A grouping is a note but also has additional powers such as:
+<ol>
+    <li>    Add. Add or remove a post.
+    <li>    Permissions. Set permissions level to private, protected or public.
+    <li>    Users. Set a specific membership.
+    <li>    Invite. Send an invitation email to membership.
+    <li>    Watch. Watch this map ( get alerts when this map changes ).
+    <li>    Restrict. Allow posts made to this map to have images, or audio or the like, or disallow such.
+</ol>
+
+This is a database backed and database centric application. To provide controls over that application a bare bones web based interface is presented. This interface allows basic curation of content. Concepts and powers that users have through the web interface include:
+<ol>
+    <li>    Main Display.  This page features a map centric display and buttons that lead off to other controls such as login, preferences, search and add new features.
+    <li>    Login Panel. Visitors can register for an account on the site and login to the site later using an ordinary password based approach.
+    <li>    Post Panel. Visitors can make new posts and can view a post in detail.  See next paragraph for more details.
+    <li>    Search Panel. There is a search term input box and Visitors can see posts filtered by a variety of criteria such as authorship, location and time.
+    <li>    Signup. This page collects sign up information such as name, password, depiction. It is similar to say http://twitter.com/signup .
+    <li>    Profile Page. Signed up members have a personal profile page that shows their depiction and their stream of consciousness - which can also be searched.
+</ol>
+
+<h2>Mobile UI</h2>
+
+The mobile experience is similar to the web experience and is informed in design by the web experience. In this manner there is a minimum design and coding effort. However a key aspect of the mobile experience is the ability to work offline - with good browse history and revision and posting controls such that when an internet connection is re-established that all user activity can be safely uploaded.
+
+<ol>
+    <li>    Main.
+    <li>    Login.
+    <li>    Post.
+    <li>    Search.
+    <li>    Setup. Add or remove a GPS and see nearby bluetooth devices.
+</ol>
+
+The mobile view will show a map centric display. There will be a preferences panel for setting your login and password. There will be buttons to post new content and to see a list view of content and to do searches. The search panel will allow a variety of useful search types.
+
+<h2>UI Overview</h2>
+
+In general most user interfaces consist of a set of fairly basic list management operations. This application is no different.  The UI for both the web and mobile consists of:
+
+<ol>
+    <li>    A splash or landing page that provides an overview of the site
+    <li>    Signup, Signin, Signout capabilities so that people can sign up to become members, see their recent activity and the like.
+    <li>    Post something new
+    <li>    Search
+</ol>
+
+<h2>Web Based UI in more detail</h2>
+
+Banner Bar:
+<ol>
+    <li>    Search
+    <li>    Signup / Signin / Signout
+    <li>    Help
+    <li>    Goto main home page
+    <li>    Goto your home page
+    <li>    Add a new post
+    <li>    Add a new map
+</ol>
+
+Main Page:
+
+<ol>
+    <li>    A map centric display that allows panning and zooming and shows results of searches
+    <li>    A clickable list view of all posts on the current map
+    <li>    A clickable list view of all users who contributed to posts that are visible on the current map
+</ol>
+Advanced Search Page:
+<ol>
+    <li>    Any simple search brings you to this advanced search page.
+    <li>    Enter a phrase to search for.
+    <li>    Enter geographic boundaries to search on.
+    <li>    Enter time constraints to restrict search by.
+    <li>    Enter user to restrict search by.
+</ol>
+User Account Preferences
+<ol>
+    <li>    Enter your location
+    <li>    Enter your permissions
+    <li>    Enter your name
+    <li>    Enter your password
+    <li>    Enter your image depiction
+</ol>
+User Home Page
+<ol>
+    <li>    Show user image depiction
+    <li>    Show user name
+    <li>    Show user posts in a time line
+    <li>    Show user maps in a time line
+    <li>    Add user as a friend
+</ol>
+Make a new Post
+<ol>
+    <li>    Enter title
+    <li>    Enter description
+    <li>    Enter category
+    <li>    Enter location
+    <li>    Uses current date
+    <li>    Uses you as a sponsor
+    <li>    Enter associated with other map
+    <li>    Enter associated image
+    <li>    Enter public, protected, private
+</ol>
+Make a new Map
+<ol>
+    <li>    Enter title
+    <li>    Enter description
+    <li>    Enter category
+    <li>    Enter location
+    <li>    Uses current date
+    <li>    Uses you as a sponsor
+    <li>    Enter associated image
+    <li>    Enter public, protected, private
+</ol>
+
+<h2>References</h2>
+<ol>
+    <li>    http://ushahidi.org
+    <li>    http://twittervision.com
+    <li>    http://thingster.org
+    <li>    http://swiftapp.org
+</ol>
+

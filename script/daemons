@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+require 'yaml'
+daemons = YAML.load(open(File.dirname(__FILE__) + "/../config/daemons.yml"))
+Dir[File.dirname(__FILE__) + "/../lib/daemons/*_ctl"].each {|f| (puts "Starting #{f[/\w+_ctl/].gsub(/_ctl/,'')} daemon";`#{f} #{ARGV.first}`) if daemons["status"][f[/\w+_ctl/].gsub(/_ctl/,'')]}

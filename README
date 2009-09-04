@@ -1,0 +1,52 @@
+========
+About
+========
+
+This is a web based server application that lets people geoblog.
+Using a web browser you signup for an account on the server and can then create maps and posts that go onto maps.
+You can also use a mobile client to talk to the web server as well if you wish (but that is a separate project).
+
+This is licensed under MIT, BSD and GPL3 - pick your poison.
+
+This application uses code from http://ushahidi.org, http://swiftapp.org, http://angel.makerlab.org and http://thingster.org.
+
+=============
+Installation
+=============
+
+This is a Ruby on Rails application.  You should have Ruby on Rails Installed.
+
+Warnings!
+
+1) This application relies on postgresql.
+2) json-pure is erratic; you may have to comment it out in /controllers/application_controller.rb
+
+You will need a variety of plugins including:
+
+  gem install tsearch2 sanitize postgresql json-pure compass sass
+
+Installation is similar to most Ruby On Rails apps.
+
+1) Configure your config/database.yml file  [ see config/database.yml.example ]
+2) Configure your config/settings.yml file to use your own keys for various third party services please
+3) Optionally you can seed the system with data by typing "rake db:seed"
+
+=============
+Usage
+=============
+
+There are a variety of simple functions that you can do:
+
+1) Sign up
+2) Go to your home page
+3) Create a map
+4) Create a place
+5) Sign out
+6) You can grant yourself administrative privileges and you can see an administrative page at "/admin" as well.
+
+==============
+Resources
+==============
+
+See http://github.com/anselm/locative for more details
+

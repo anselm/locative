@@ -1,0 +1,18 @@
+development:
+  adapter: postgresql
+  database: locative
+  username: locative
+  password: locative
+
+production:
+  adapter: postgresql
+  database: locative
+  username: locative
+  password: locative
+
+test:
+  adapter: postgresql
+  database: locative_test
+  username: locative_test
+  password: locative_test
+

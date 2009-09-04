@@ -1,0 +1,49 @@
+== master
+
+== 0.1.7 / 2009-07-17
+
+* Added abbreviated predicate methods
+* Added and cleaned documentation
+
+== 0.1.6 / 2009-07-15
+
+* Refactored
+
+== 0.1.5 / 2009-07-14
+
+* Refactored to remove unnecessary class methods from class
+* Dynamically load class methods into implementing class object
+
+== 0.1.4 / 2009-07-14
+
+* Removed log files from gem build
+
+== 0.1.3 / 2009-07-14
+
+* Adds Ingration module supporting Object and ActiveRecord
+* Adds extensibility to Integration module
+* Adds ActiveRecord Integration
+* Improves pluralization -- supports /(sh|ch|x|s)$/, /y$/, /[aeiou]y$/ and +'s' pluralization
+
+== 0.1.2 / 2009-07-11
+
+* Added 'is_not' for negated custom method definitions
+* Added dynamic creation of 'nil' predicate methods
+* Refactored MethodDefinitionDSL
+* Added EnumeratedAttribute::MethodDefinition 
+
+== 0.1.1 / 2009-07-09
+
+* Added enum_attr_reader and enum_attr_writer
+* Added option :nil=>true to allow attributes set to nil
+* Added #{attr_name}_nil? method for testing nil case
+
+== 0.1.0 / 2009-07-08
+
+* Added dynamic predicate method generation
+* Added options handling
+* Added incrementor and decrementor
+* Added enumeration accessor
+* Added accessor and enumeration value definition
+* Added simple attribute initialization
+* Added DSL for short-hand method definition

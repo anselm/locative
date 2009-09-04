@@ -1,0 +1,17 @@
+dir_mode: script
+dir: ../../log
+multiple: false
+backtrace: true
+monitor: true
+ontop: false
+log_output: true
+status:
+    cache_reports: false
+    poll_email: false
+    poll_flickr: true
+    poll_mozes: false
+    poll_tweets: true
+    poll_youtube: false
+    poll_feeds: true
+    retweet: false
+

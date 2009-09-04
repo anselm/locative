@@ -1,0 +1,53 @@
+
+#
+# A place - effectively something in the real world; can be a grouping
+#
+banffcentre:
+  id: 1
+  title: The Banff Centre
+  link: http://banffcentre.ca
+  description: The Banff Centre for the Arts is an accredited Post Secondary Institution
+  tagstring: banffcentre, banff
+  location: banff, alberta, canada
+  lat: 51.1697
+  lon: -115.559
+  rad: 1
+  begins:
+  ends:
+  kind: KIND_PLACE
+  uuid: 1
+  provenance:
+  statebits: 0
+  depth: 0
+  score: 0
+  owner_id: 1
+  photo_file_name: 080116_PolygonStructure_001_02_j_Pshop-738221.jpg
+  photo_content_type: image/jpeg
+  photo_file_size: 552099
+
+#
+# A map collecting a number of places
+#
+banffmap:
+  id: 2
+  title: Banff Places Map
+  link: http://banff.ca
+  description: Banff Alberta Canada has a moratorium on new development and is in the Rocky Mountains
+  tagstring: banff,alberta,canada
+  location: banff, alberta, canada
+  lat: 51.1697
+  lon: -115.559
+  rad: 10
+  begins:
+  ends:
+  kind: KIND_MAP
+  uuid: 2
+  provenance:
+  statebits: 0
+  depth: 0
+  score: 0
+  owner_id: 1
+  photo_file_name: 080116_PolygonStructure_001_02_j_Pshop-738221.jpg
+  photo_content_type: image/jpeg
+  photo_file_size: 552099
+

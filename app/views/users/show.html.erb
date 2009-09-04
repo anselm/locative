@@ -1,0 +1,18 @@
+<h2><%= @user.login %></h2>
+<% if @user.photo.exists? then %>
+<%= image_tag @user.photo.url(:small) %>
+<% else %>
+<img src="/images/default.jpg" width="50" height="50" style="border: 4px ridge grey" />
+<% end %>
+<br/>
+<div style="clear:both"></div>
+<% if @user.admin %>
+<a href="/notes_admin">administer posts</a>
+<a href="/users_admin">administer users</a>
+<a href="/relations_admin">administer relations</a>
+<% end %>
+
+<a href='/new'>make a new map or place</a><br/>
+<a href='/new'>see your posts</a><br/>
+<a href='/new'>see your friends</a><br/>
+<%= link_to 'edit your account profile', edit_account_path %>

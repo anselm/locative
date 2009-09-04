@@ -1,0 +1,19 @@
+site_url: locative.makerlab.org
+site_name: locative
+site_twitter_username: locative
+site_twitter_password: password
+site_metacarta_key: password
+site_metacarta_userid: anselm@hook.org
+site_metacarta_pass: password 
+site_email: twitter@locative.makerlab.org
+site_internal_email: locative@googlegroups.com
+site_user_email: unknown@unknown.com
+yahoo_placemaker_api: password
+yahoo_id: password
+yahoo_bbauth_url: http://locative.makerlab.org/auth
+yahoo_shared_secret: password
+site_latitude: 45
+site_longitude: -122
+site_radius: 25mi
+googlemaps: ABQIAAAAmxDIRcelCE7QQOeFeIJlKBSnIOQpH7KHNeZhJJR1cYfmUwNX8hQdGZq5o5bSExpB1KyGnawC-jiF3w
+

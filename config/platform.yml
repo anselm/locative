@@ -1,0 +1,8 @@
+production:
+    name: SwiftRiver Iran Elections
+    url: http://iranelection.swiftapp.org
+    iphone_url: http://iphone.votereport.in
+    audio_url: http://calls.votereport.in
+    tag: iranelection
+    tags: iran09,iranelection,tehran,mousavi
+
