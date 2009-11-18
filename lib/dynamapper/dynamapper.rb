@@ -45,6 +45,7 @@ class Dynamapper
   attr_accessor :map_type
   attr_accessor :features
   attr_accessor :map_usercallback
+  attr_accessor :countrycode
 
   #
   # initialize()
@@ -60,7 +61,8 @@ class Dynamapper
     @zoom = args[:zoom] || 9 
     @map_type = "G_SATELLITE_MAP"
     @features = []
-	@map_usercallback = "map_user_initialize"
+    @map_usercallback = "map_user_initialize"
+    @countrycode = ""
   end
 
   #
@@ -439,6 +441,8 @@ function mapper_hide_stale() {
 		var feature = mapper_features[key];
 		if(feature != null && feature.stale == true) {
 			feature.hide(); // removeOverlay();
+		} else if( feature != null ) {
+			feature.show();
 		}
 	}
 }
@@ -633,7 +637,7 @@ function mapper_page_paint_markers(blob) {
 
 function mapper_page_paint_text(blob) {
 
-        // a list to draw text to
+        // draw to these text widgets explicitly for now 
         var people_box = document.getElementById("people_box");
         var posts_box = document.getElementById("posts_box");
         var urls_box = document.getElementById("urls_box");
@@ -698,13 +702,19 @@ function mapper_page_paint_text(blob) {
                                 people_box.appendChild(node);
                                 count_user++;
                         }
-                        if(kind == "KIND_POST" || kind == "KIND_PLACE" || kind == "KIND_MAP" && posts_box != null) {
+                        if(kind == "KIND_POST" && posts_box != null) {
                                 node.innerHTML = mapper_make_links_clickable(title,ownername);
                                 posts_box.appendChild(node);
                                 count_post++;
                         }
+                        if(kind=="KIND_PLACE" && posts_box != null) {
+                                node.innerHTML = "<a href='/note/"+id+"'>"+title+"</a> by "+ownername;
+                                posts_box.appendChild(node);
+                                count_post++;
+			}
                 }
 	}
+        // alert("total urls,users,posts = " + count_url + " " + count_user + " " + count_post );
 }
 
 var mapper_page_update_already_busy = 0;
@@ -738,7 +748,7 @@ function mapper_page_paint(blob) {
 function mapper_page_paint_request(recenter) {
 
 	if(map == null) return;
-	var url = "/json?";
+	var url = "/json?country=#{@countrycode}&";
 
 	// tack on the search phrase
 	var q = document.getElementById("q");
@@ -762,11 +772,26 @@ function mapper_page_paint_request(recenter) {
 	var e = ne.lng();
 	url = url + "s="+s+"&w="+w+"&n="+n+"&e="+e;
 
+        // spinner
+        var spinner = document.getElementById('spinner');
+        if(!spinner) {
+          spinner = document.createElement('img');
+          spinner.src = "/spinner.gif";
+          spinner.id = "spinner";
+          spinner.style.position = "absolute";
+          spinner.style.left = "10px";
+          spinner.style.top = "100px";
+          spinner.style.display = "block";
+          document.body.appendChild(spinner);
+        }
+        spinner.style.display = "block";
+
 	new Ajax.Request(url, {
 		method:'get',
 		requestHeaders: {Accept: 'application/json'},
 		onSuccess: function(transport) {
-			var blob = transport.responseText.evalJSON();
+			spinner.style.display = "none";
+                        var blob = transport.responseText.evalJSON();
 			if( blob ) {
 				mapper_page_paint(blob);
 				if( recenter == true ) {
