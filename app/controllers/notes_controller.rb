@@ -36,6 +36,7 @@ class NotesController < ApplicationController
 
   def create
     @note = Note.new(params[:note])
+    @note.owner_id = current_user.id if current_user
     respond_to do |format|
       if @note.save
         flash[:notice] = 'Note was successfully created.'
