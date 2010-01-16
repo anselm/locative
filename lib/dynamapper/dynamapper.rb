@@ -708,7 +708,7 @@ function mapper_page_paint_text(blob) {
                                 count_post++;
                         }
                         if(kind=="KIND_PLACE" && posts_box != null) {
-                                node.innerHTML = "<a href='/note/"+id+"'>"+title+"</a> by "+ownername;
+                                node.innerHTML = "<a href='/notes/"+id+"'>"+title+"</a> by "+ownername;
                                 posts_box.appendChild(node);
                                 count_post++;
 			}

@@ -12,15 +12,15 @@ class IndexController < ApplicationController
   #
   def index
 
-	# configure map engine
-	# this is javascript but i'd like to have it be purely static TODO improve
-	parse_arguments
+    # configure map engine
+    # this is javascript but i'd like to have it be purely static TODO improve
+    parse_arguments
     @map.question = @q
-	@map.south = @s
-	@map.west = @w
-	@map.north = @n
-	@map.east = @e
-	@map.countrycode = @country
+    @map.south = @s
+    @map.west = @w
+    @map.north = @n
+    @map.east = @e
+    @map.countrycode = @country
 
   end
 
@@ -37,7 +37,7 @@ class IndexController < ApplicationController
     # perform search
     results = QuerySupport::query(@q,@s,@w,@n,@e,@synchronous)
 
-	# temporary code - distance sort and limit the results
+    # temporary code - distance sort and limit the results
     if @rad != nil && @rad > 0.0
       r = results[:results]
       r.each { |note| note.rad = (@lat-note.lat)*(@lat-note.lat)+(@lon-note.lon)*(@lon-note.lon) }
@@ -59,27 +59,27 @@ class IndexController < ApplicationController
     @synchronous = false
     @synchronous = true if params[:synchronous] && params[:synchronous] == true
 
-	# accept a query phrase including persons, places and terms
+    # accept a query phrase including persons, places and terms
     @q = nil
     @q = session[:q] = params[:q].to_s if params[:q]
-	@q = session[:q] if !params[:q]
+    @q = session[:q] if !params[:q]
 
     # accept an explicit boundary { aside from any locations specified in the query }
     @s = @w = @n = @e = 0.0
     begin
-		@s = session[:s] = params[:s].to_f if params[:s]
-		@w = session[:w] = params[:w].to_f if params[:w]
-		@n = session[:n] = params[:n].to_f if params[:n]
-		@e = session[:e] = params[:e].to_f if params[:e]
-		@s = session[:s].to_f if !params[:s]
-		@w = session[:w].to_f if !params[:w]
-		@n = session[:n].to_f if !params[:n]
-		@e = session[:e].to_f if !params[:e]
+	@s = session[:s] = params[:s].to_f if params[:s]
+	@w = session[:w] = params[:w].to_f if params[:w]
+	@n = session[:n] = params[:n].to_f if params[:n]
+	@e = session[:e] = params[:e].to_f if params[:e]
+	@s = session[:s].to_f if !params[:s]
+	@w = session[:w].to_f if !params[:w]
+	@n = session[:n].to_f if !params[:n]
+	@e = session[:e].to_f if !params[:e]
     rescue
     end
 
     # accept an explicit country code - this will override the location boundary supplied above
-	# TODO arguably we should compute the country code boundary right now so that radius can be used
+    # TODO arguably we should compute the country code boundary right now so that radius can be used
     @country = nil
     @country = params[:country] if params[:country] && params[:country].length > 1
 
@@ -99,17 +99,17 @@ class IndexController < ApplicationController
       end
     end
 
-	# Allow a new post. TODO this needs to block bad actors and also deal with duplicates.
+    # Allow a new post. TODO this needs to block bad actors and also deal with duplicates.
     if params[:title]
       @user = User.first
       @userid = @user.id || 0
-      @note = Note.new( {	:kind => "KIND_PLACE",
-							:title => params[:title],
-							:owner_id => @userid,
-							:lat => @lat,
-							:lon => @lon,
-							:rad => @rad
-						} )
+      @note = Note.new({:kind => "KIND_PLACE",
+			:title => params[:title],
+			:owner_id => @userid,
+			:lat => @lat,
+			:lon => @lon,
+			:rad => @rad
+			} )
       if @note.save
         render :json => @note.to_json, :layout => nil
       else
