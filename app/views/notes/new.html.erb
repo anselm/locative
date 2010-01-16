@@ -1,6 +1,5 @@
-<h1>New note</h1>
-<% form_for(@note, :url => notes_path, :html => { :multipart => true } ) do |f| %>
-  <%= f.error_messages %>
-  <%= render :partial => "form", :object => f %>
-  <%= f.submit %>
+<h1>New Note</h1>
+<% @interactive = 1 %>
+<% form_for(@note, :url => "/notes/create", :html => { :multipart => true } ) do |f| %>
+<%= render :partial => "form", :object => f %>
 <% end %>

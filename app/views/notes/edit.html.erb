@@ -1,0 +1,6 @@
+<h1>Edit Note</h1>
+<% @interactive = 1 %>
+<% form_for ( @note, :url => "/notes/update/#{@note.id}", :html => { :multipart => true } ) do |f| %>
+  <%= render :partial => "form", :object => f %>
+<% end %>
+

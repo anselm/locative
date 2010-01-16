@@ -1,0 +1,164 @@
+<%
+
+# TODO later please use a form builder; such as from previous projects; for now this will conflate viewing and editing.
+
+def form_text_field(form,name)
+  return form.text_field(name) if @interactive == 1
+  return "<span style='width:200px' class='input'>#{@note.send(name)}</span>"
+end
+
+def form_file_field(form,name)
+  return form.file_field(name) if @interactive == 1
+  return "<span style='width:200px' class='input'>#{@note.send(name)}</span>"
+end
+
+def form_menu_field(form,name,candidates)
+  return select("note","kind",candidates,{:include_blank => 'None'}) if @interactive == 1
+  return @note.send(name)
+end
+
+def form_submit_field(form,name)
+  return form.submit name if @interactive == 1
+  return ""
+end
+
+%>
+
+<h2>Main Properties</h2>
+
+<label class='inputdialog'>&nbsp;</label>	<%= form_submit_field form,:Save %><br/>
+<label class='inputdialog'>Title</label>	<%= form_text_field form,:title %><br/>
+<label class='inputdialog'>Link</label>		<%= form_text_field form,:link %><br/>
+<label class='inputdialog'>Description</label>  <%= form_text_field form,:description %><br/>
+<label class='inputdialog'>Tags</label>		<%= form_text_field form,:tagstring %><br/>
+<label class='inputdialog'>Location</label>	<%= form_text_field form,:location %><br/>
+<label class='inputdialog'>Latitude</label>	<%= form_text_field form,:lat %><br/>
+<label class='inputdialog'>Longitude</label>    <%= form_text_field form,:lon %><br/>
+<label class='inputdialog'>Radius </label>	<%= form_text_field form,:rad %><br/>
+<label class='inputdialog'>Begins</label>	<%= form_text_field form,:begins %><br/>
+<label class='inputdialog'>Ends</label>		<%= form_text_field form,:ends %><br/>
+<label class='inputdialog'>Photo</label>	<%= form_file_field form,:photo %><br/>
+<label class='inputdialog'>&nbsp;</label>
+
+<% if @note.photo.exists? then %>
+<%= image_tag @note.photo.url(:small) %><br/>
+<% else %>
+<img src="/images/default.jpg" width="50" height="50" style="border: 4px ridge grey" /><br/>
+<% end %>
+<br>
+
+<h2>Admin</h2>
+<label class='inputdialog'>kind </label>	<%= form_menu_field form,:kind,Note::KINDS %><br/>
+<label class='inputdialog'>uuid </label>	<%= form_text_field form,:uuid %><br/>
+<label class='inputdialog'>provenance </label>	<%= form_text_field form,:provenance %><br/>
+<label class='inputdialog'>statebits </label>	<%= form_text_field form,:statebits %><br/>
+<label class='inputdialog'>score </label>	<%= form_text_field form,:score %><br/>
+<label class='inputdialog'>owner_id </label>	<%= form_text_field form,:owner_id %><br/>
+<label class='inputdialog'>&nbsp;</label>	<%= form_submit_field form,:Save %>
+<!-- tree depth set automatically
+<label class='inputdialog'>depth </label>	<%= form_text_field form,:depth %><br/>
+ -->
+
+<h2>Permissions</h2>
+
+<label class='inputdialog'>permissions </label>	<%= form_text_field form,:permissions %><br/>
+
+Rules
+<ul>
+<li>Allow children?
+<li>Allow remove children by anybody?
+<li>Allow a parent
+<li>private
+<li>protected
+<li>public
+<li>Allow any attributes on children
+<li>Only allow specified prototypes
+<li>Mark a given attribute as mandatory
+<li>Mark a given attribute as unitary
+</ul>
+
+<h2>Children</h2>
+
+Rules
+<ul>
+<li>Add a child [ if parent allows it, if you are admin, or if you made parent ]
+<li>Add a child and mark as a prototype [ if parent allows, if you made it ]
+<li>Remove a child [ if parent allows, if you are admin, if you made it ]
+</ul>
+
+<h2>Attributes</h2>
+
+Allow open ended attributes addition or removal via relations ( incmplete)
+<!--
+	[x] [kind]					[value]
+	[x] [barometric pressure]	[12.5]
+	[x] [tag]					[blue]
+	[x] [category]				[peace]
+	[x] [phylum]				[phylum/mollusca]
+	[x] [phylum]				[phylum/porifera]
+	[x] [phylum]				[phylum/cnidaria]
+	[x] [owns]					[linkto:12345#badger]
+	[x] [    ]                  [ ]
+-->
+
+Rules
+<ul>
+<li>Allow adding of attributes [ if marked as such ]
+<li>Allow removing of attributes [ if marked as such ]
+</ul> 
+
+<script>
+
+function draw_relation(flags,kind,value,sibling) {
+
+	var root = document.getElementById('parent');
+	root.innerHTML = html;
+
+	// flags can be { mandatory | unique }
+	if(!(flags & RELATION_FLAG_MANDATORY)) {
+		draw [x]
+	}
+
+//	draw [x] [] []
+//	draw [x] [] []
+
+}
+
+function draw_relations() {
+
+	var relations = [];
+	var prototype_relations = [];
+
+	// the real object has certain relations, draw them
+	for(var j = 0; j < relations.length ; j++ ) {
+		draw_relation("","","");
+	}
+
+	// the prototype object provides hints about what kinds of relations the users can type
+	// but we only want to add the hint if it is really needed
+	for(var i = 0; i< prototype_relations.length; i++ ) {
+		exists = false;
+		for(var j = 0; j < relations.length ; j++ ) {
+			if( prototype_relations[i].kind == relations[i].kind) {
+				exists = true;
+				break;
+			}
+		}
+		if(exists == false ) {
+			// draw_relation(flags,name,value,link);
+		}
+	}
+
+}
+
+</script>
+
+<%
+
+#    query = { :note_id => @note.id }
+#    relations = Relation.find(:all,:conditions=>query)
+#	relations.each do |r|
+#	 select("note","kind",Note::KINDS,{:include_blank => 'None'})
+#	end
+
+%>

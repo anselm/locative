@@ -1,0 +1,7 @@
+<h1>ALL USERS</h1>
+<% User.find(:all, :order => "created_at DESC" ).each do |n| %>
+  <p><%= n.login %>
+  <p class="date"><%= n.created_at %></p>
+<% end %>
+
+

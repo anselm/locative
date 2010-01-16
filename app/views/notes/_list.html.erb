@@ -1,0 +1,10 @@
+<h2><%= current_user.login %>'s locations</h2>
+<% Note.find(:all, :conditions => { :owner_id=> current_user.id }, :order => "created_at DESC" ).each do |n| %>
+ <% nowner = User.find_by_id(n.owner_id) %> 
+ <% if nowner %>
+  <p><%= n.title %>: <%= n.description %><br />
+  <%= n.lat %>, <%= n.lon %>
+  <p class="date"><%= n.created_at %></p>
+ <% end %>
+<% end %>
+

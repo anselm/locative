@@ -1,0 +1,11 @@
+<h1>ALL NOTES</h1>
+<% Note.find(:all, :order => "created_at DESC" ).each do |n| %>
+ <% nowner = User.find_by_id(n.owner_id) %> 
+ <% if nowner %>
+  <p><%= n.title %>: <%= n.description %><br />
+  <%= n.lat %>, <%= n.lon %>
+  <p class="date"><%= n.created_at %></p>
+ <% end %>
+<% end %>
+
+

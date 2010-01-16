@@ -1,0 +1,70 @@
+xml.instruct! :xml, :version=>"1.0" 
+xml.rss (:version => "2.0", "xmlns:georss" => "http://www.georss.org/georss") {
+  xml.channel {
+    xml.title("angel")
+    xml.link("http://angel.makerlab.org")
+    xml.description("query results")
+    xml.language('en-us')
+    addfriends = []
+    repeats = {}
+    for note in @notes
+      next if repeats[note.id]
+      repeats[note.id] = note.id
+      xml.item do
+        xml.title(note.title)
+        xml.description(note.description) 
+        xml.pubDate(note.created_at.strftime("%a, %d %b %Y %H:%M:%S %z"))
+        xml.guid(note.uuid)
+        xml.id(note.id)
+        xml.georss :point do 
+            xml.text! note.lat.to_s + ' ' + note.lon.to_s 
+        end
+        xml.kind(note.kind)
+        # for posts i would like to return a link to the user who posted it
+        if(note.kind == 'post')
+           xml.relations(note.owner_id)
+        end
+        # for user i would like to return a link to other friends 
+        # also i'd like to return those friends as well
+        if(note.kind == 'user')
+           friends = []
+           note.relation_all_siblings_as_notes(Note::RELATION_FRIEND,nil).each do |friend|
+             friends << friend.id
+             addfriends << friend if addfriends.length < 999
+           end
+           xml.relations(friends.join(' '))
+        end
+      end
+    end
+    for note in addfriends
+      next if repeats[note.id]
+      repeats[note.id] = note.id
+      xml.item do
+        xml.title(note.title)
+        xml.description(note.description) 
+        xml.pubDate(note.created_at.strftime("%a, %d %b %Y %H:%M:%S %z"))
+        xml.guid(note.uuid)
+        xml.id(note.id)
+        xml.georss :point do 
+            xml.text! note.lat.to_s + ' ' + note.lon.to_s 
+        end
+        xml.kind(note.kind)
+        # for posts i would like to return a link to the user who posted it
+        if(note.kind == 'post')
+           xml.relations(note.owner_id)
+        end
+        # for user i would like to return a link to other friends 
+        # also i'd like to return those friends as well
+        if(note.kind == 'user')
+           friends = []
+           note.relation_all_siblings_as_notes(Note::RELATION_FRIEND,nil).each do |friend|
+             friends << friend.id
+             # addfriends << friend if addfriends.length < 999
+           end
+           xml.relations(friends.join(' '))
+        end
+      end
+    end
+  }
+}
+
