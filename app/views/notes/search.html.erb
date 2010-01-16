@@ -1,0 +1,10 @@
+<h2>NOTES FILTERED BY SEARCH CRITERIA</h2>
+<% @notes.each do |n| %>
+ <% nowner = User.find_by_id(n.owner_id) %> 
+ <% if nowner %>
+  <p><%= n.title %>: <%= n.description %><br />
+  <%= n.lat %>, <%= n.lon %>
+  <p class="date"><%= n.created_at %></p>
+ <% end %>
+<% end %>
+

@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
   before_filter :require_no_user, :only => [:new, :create]
-  before_filter :require_user, :only => [:show, :edit, :update]
+  before_filter :require_user, :only => [:search, :show, :edit, :update]
   
   def new
     @user = User.new
@@ -39,6 +39,12 @@ class UsersController < ApplicationController
     # TODO PAGINATION
     # TODO KEEP AS AN ADMINISTRATIVE ROLE
     @users = User.all
+  end
+
+  def search
+    # this is a debugging support method to provide a boring list view of your posts filtered by minimal criteria
+    @notes = Note.find(:all , :conditions => { :owner_id=> @current_user.id }, :order => "created_at DESC" )
+    render :template => 'notes/search' 
   end
 
 end

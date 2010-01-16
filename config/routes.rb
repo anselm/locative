@@ -4,9 +4,12 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :admin_relations, :active_scaffold => true
   map.resources :admin_users, :active_scaffold => true
 
+  # TODO merge account, user_session and users into one concept?
   map.resource :account, :controller => "users"
   map.resource :user_session
+
   map.resources :users
+  map.resources :users, :collection => { :search => [:get, :post] }
 
   map.signup 'signup', :controller => 'users', :action => 'new'
   map.signin 'signin', :controller => 'user_sessions', :action => 'new'
