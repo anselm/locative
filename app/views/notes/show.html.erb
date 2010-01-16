@@ -1,0 +1,30 @@
+<h2><%= current_user.login %>'s locations</h2>
+<% Note.find(:all, :conditions => { :owner_id=> current_user.id }, :order => "created_at DESC" ).each do |n| %>
+
+<% nowner = User.find_by_id(n.owner_id) %> 
+
+  <% if nowner %>
+
+   <p><%= n.title %>: <%= n.description %><br />
+   <%= n.lat %>, <%= n.lon %>
+   <p class="date"><%= n.created_at %></p>
+
+  <% else %>
+  Moo moo moo!
+  <% end %>
+
+<% end %>
+
+
+<br/>
+<div style="clear:both"></div>
+<% if current_user.admin %>
+<a href="/note_admin">administer posts</a>
+<a href="/users_admin">administer users</a>
+<a href="/relations_admin">administer relations</a>
+<% end %>
+
+<a href='/notes/new'>make a new map or place</a><br/>
+<a href='/notes/show'>see your posts</a><br/>
+<a href='/new'>see your friends</a><br/>
+<%= link_to 'edit your account profile', edit_account_path %>
