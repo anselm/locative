@@ -5,7 +5,7 @@
 <input type="text" name="q" id="q" value="<%=params[:q]%>" size="20" />
 <input type="submit" value="search" />
 </form>
-<%= link_to "home", "/" %> |
+<%= link_to "top", "/" %> |
 <%= link_to "new", "/notes/new" %> |
 <% if !current_user %>
 <%= link_to "signup", new_account_path %> |
@@ -14,7 +14,7 @@
 <% if current_user.admin %>
 <%= link_to "admin", "/notes_admin" %> |
 <% end %>
-<%= link_to "account", account_path %> |
+<%= link_to "home", account_path %> |
 <%= link_to "signout", user_session_path, :method => :delete %>
 <% end %>
 </div>
